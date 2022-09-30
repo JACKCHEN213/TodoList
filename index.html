@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Template • TodoMVC</title>
+	<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+	<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+	<!-- CSS overrides - remove if you don't need it -->
+	<link rel="stylesheet" href="./css/app.css">
+	<script src="./js/vue.js"></script>
+	<script src="./js/axios.min.js"></script>
+	<!-- <script src="./js/jquery.js"></script> -->
+</head>
+
+<body>
+	<section id="todoapp" class="todoapp">
+		<header class="header">
+			<h1>TodoList</h1>
+			<input class="new-todo" placeholder="What needs to be done?" v-focus @keyup.enter="AddTask">
+		</header>
+		<!-- This section should be hidden by default and shown when there are todos -->
+		<template v-if="list_data.length">
+			<section class="main">
+				<input id="toggle-all" class="toggle-all" type="checkbox" @click="ToggleAll">
+				<label for="toggle-all">Mark all as complete</label>
+				<ul class="todo-list">
+					<li v-for="(v, k) in list_data" :class="{completed: v.stat, show: v.show}">
+						<div class="view">
+							<input id="'item_' + v.id" class="toggle" type="checkbox" @click="ToggleOne(k)" :checked="v.stat">
+							<label for="'item_' + v.id">{{v.title}}</label>
+							<button class="destroy" @click="DestroyThis(k)"></button>
+						</div>
+						<input class="edit" value="Rule the web">
+					</li>
+				</ul>
+			</section>
+			<!-- This footer should hidden by default and shown when there are todos -->
+			<footer class="footer">
+				<!-- This should be `0 items left` by default -->
+				<span class="todo-count"><strong>{{list_data.length}}</strong> item left</span>
+				<!-- Remove this if you don't implement routing -->
+				<ul class="filters ">
+					<li>
+						<a :class="{selected: is_click == 0}" @click.prevent="ShowAll">All</a>
+					</li>
+					<li>
+						<a :class="{selected: is_click == 1}" @click.prevent="ShowActive">Active</a
+							:class="{selected: is_click == 1}">
+					</li>
+					<li>
+						<a :class="{selected: is_click == 2}" @click.prevent="ShowCompleted">Completed</a
+							:class="{selected: is_click == 2}">
+					</li>
+				</ul>
+				<!-- Hidden if no completed items are left ↓ -->
+				<template v-if="ShowClearCompleted() > 0">
+					<button class="clear-completed" @click="ClearCompleted">Clear completed</button>
+				</template>
+			</footer>
+		</template>
+	</section>
+	<footer class="info">
+		<p>Double-click to edit a todo</p>
+		<!-- Remove the below line ↓ -->
+		<p>Template by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
+		<!-- Change this out with your name and url ↓ -->
+		<p>Created by <a href="http://todomvc.com">you</a></p>
+		<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+	</footer>
+	<!-- Scripts here. Don't remove ↓ -->
+	<!-- <script src="node_modules/todomvc-common/base.js"></script> -->
+	<script src="./js/app.js"></script>
+</body>
+
+</html>
