@@ -7,7 +7,7 @@
 			base_url: 'http://127.0.0.1:8082/',
 		},
 		mounted: function () {
-			axios.get(this.base_url + 'list_data')
+			axios.get(this.base_url + 'ListData')
 				.then((backdata) => {
 					if (backdata.data.error) {
 						alert(backdata.data.error);
@@ -26,7 +26,7 @@
 				}
 				var stat = false;
 				var show = false;
-				axios.post(this.base_url + 'list_data', {
+				axios.post(this.base_url + 'ListData', {
 					title,
 					stat,
 					show
@@ -50,7 +50,7 @@
 			ToggleAll(ev) {
 				this.list_data.map((v) => {
 					(() => {
-						axios.put(this.base_url + 'list_data', {
+						axios.put(this.base_url + 'ListData', {
 							id: v.id,
 							title: v.title,
 							stat: ev.target.checked,
@@ -69,7 +69,7 @@
 				});
 			},
 			ToggleOne(k) {
-				axios.put(this.base_url + 'list_data', {
+				axios.put(this.base_url + 'ListData', {
 					id: this.list_data[k].id,
 					title: this.list_data[k].title,
 					stat: !this.list_data[k].stat,
@@ -87,7 +87,7 @@
 			},
 			DestroyThis(key) {
 				// 这里的key并不是id值, 而是list_data的索引值
-				axios.delete(this.base_url + 'list_data', {
+				axios.delete(this.base_url + 'ListData', {
 					data: {
 						id: this.list_data[key].id
 					}
@@ -120,7 +120,7 @@
 				for (let i = this.list_data.length - 1; i >= 0; i--) { // 倒序删除, 避免splice方法导致索引错乱
 					if (this.list_data[i].stat) { // 需要删除的节点
 						(() => { // 闭包，保存变量i
-							axios.delete(this.base_url + 'list_data', {
+							axios.delete(this.base_url + 'ListData', {
 								data: {
 									id: this.list_data[i].id
 								}
